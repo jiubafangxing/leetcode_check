@@ -139,7 +139,8 @@ public class QuestionCoffeeMachineScheduling {
 			personDrinkTimes[i] = personDrinkTime;
 		}
 		//递归处理,来获取最合适的时间
-		return process(personDrinkTimes, washingNeedTime, selfTime, 0,0);
+		//return process(personDrinkTimes, washingNeedTime, selfTime, 0,0);
+		return process2(personDrinkTimes, washingNeedTime, selfTime);
 	}
 
 
@@ -157,7 +158,34 @@ public class QuestionCoffeeMachineScheduling {
 
 		return Math.min(washEndTime, noWashEndTime);
 	}
+	
+	public int process2(int[] arr, int n, int b){
+		int washlineSize = getWashLineSize(arr,n,b);	
+		int[][] dp = new int[arr.length][washlineSize];
+		for(int i=0;i< washlineSize;i++){
+			dp[arr.length-1][i] = Math.min(Math.max(i, arr[arr.length-1]) +n,arr[arr.length-1]+b); 
+		}
+		for(int i=arr.length-2; i>=0;i--){
+			for(int j=0; j< washlineSize+1;j++){
+				int posWashlineEndTime = Math.max(arr[i],j) +n;
+				int otherWashEndTime = dp[i+1][posWashlineEndTime];
+				int washEndTime = Math.max(posWashlineEndTime, otherWashEndTime);
 
+
+				int posNoWashEndTime =  arr[i]+b;
+				int otherNoWashEndTime =dp[i+1][j]; 	
+				int noWashEndTime= Math.max(posNoWashEndTime, otherNoWashEndTime);
+				dp[i][j] = Math.min(washEndTime, noWashEndTime);
+			}
+			
+		}
+		return dp[0][0];
+
+	}
+
+	public int getWashLineSize(int[] arr, int n, int b){
+		return arr[arr.length-1] + arr.length *n;
+	}
 
 	public static void main(String[] args) {
 		int[] arr = {3, 1, 4};
