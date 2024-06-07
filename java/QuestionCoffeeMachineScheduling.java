@@ -160,12 +160,14 @@ public class QuestionCoffeeMachineScheduling {
 	}
 	
 	public int process2(int[] arr, int n, int b){
+		//估算washline最大的容量，只要dp足以容纳所有潜在的值即可
 		int washlineSize = getWashLineSize(arr,n,b);	
 		int[][] dp = new int[arr.length][washlineSize];
 		for(int i=0;i< washlineSize;i++){
 			dp[arr.length-1][i] = Math.min(Math.max(i, arr[arr.length-1]) +n,arr[arr.length-1]+b); 
 		}
 		for(int i=arr.length-2; i>=0;i--){
+			//每个人都有washline独立的上限，因此不以washlineSize为上限
 			Integer wl = arr[i]+(i+1)*n;
 			for(int j=0; j< wl;j++){
 				int posWashlineEndTime = Math.max(arr[i],j) +n;
@@ -175,7 +177,6 @@ public class QuestionCoffeeMachineScheduling {
 				int otherNoWashEndTime =dp[i+1][j]; 	
 				int noWashEndTime= Math.max(posNoWashEndTime, otherNoWashEndTime);
 				dp[i][j] = Math.min(washEndTime, noWashEndTime);
-			
 			}
 			
 		}
