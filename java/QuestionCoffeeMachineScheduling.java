@@ -166,16 +166,16 @@ public class QuestionCoffeeMachineScheduling {
 			dp[arr.length-1][i] = Math.min(Math.max(i, arr[arr.length-1]) +n,arr[arr.length-1]+b); 
 		}
 		for(int i=arr.length-2; i>=0;i--){
-			for(int j=0; j< washlineSize+1;j++){
+			Integer wl = arr[i]+(i+1)*n;
+			for(int j=0; j< wl;j++){
 				int posWashlineEndTime = Math.max(arr[i],j) +n;
 				int otherWashEndTime = dp[i+1][posWashlineEndTime];
 				int washEndTime = Math.max(posWashlineEndTime, otherWashEndTime);
-
-
 				int posNoWashEndTime =  arr[i]+b;
 				int otherNoWashEndTime =dp[i+1][j]; 	
 				int noWashEndTime= Math.max(posNoWashEndTime, otherNoWashEndTime);
 				dp[i][j] = Math.min(washEndTime, noWashEndTime);
+			
 			}
 			
 		}
