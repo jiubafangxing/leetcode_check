@@ -101,13 +101,13 @@ public class QuestionArrayMultiplierArranger{
     	int[] inputArray5 = {3,4};
     	int[] inputArray6 = {3};
     	int[] inputArray7 = {4};
-		process(inputArray);
-		process(inputArray2);
-		process(inputArray3);
-		process(inputArray4);
-		process(inputArray5);
-		process(inputArray6);
-		process(inputArray7);
+	process(inputArray);
+	process(inputArray2);
+	process(inputArray3);
+	process(inputArray4);
+	process(inputArray5);
+	process(inputArray6);
+	process(inputArray7);
 
     }
 
