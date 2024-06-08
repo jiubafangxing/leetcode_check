@@ -34,23 +34,20 @@ public class QuestionZeroOneStringCounter {
 		if (num == 2) {
 			return 2;
 		}
+		//通过总结规律，参考斐波那契数列总结出来的通项矩阵
 		int[][] helpArray = {
 				{ 1, 1 },
 				{ 1, 0 }
 		};
+		//|f(n),f(n-1)| = |f2,f1| * power(helpArray,num-2)
 		int[][] matrixResult = powerMatrix(helpArray, num - 2);
 		int[][] initStart = {
 				{ 2, 1 }
 		};
 		int[][] result = matrixMultiply(initStart, matrixResult);
-		// int sum = 0;
-		// for(int i=0;i< result.length;i++){
-			// sum+=result[i][0];
-		// }
-
 		return result[0][0] ;
 	}
-
+	//矩阵的n次方
 	public int[][] powerMatrix(int[][] helpArray, int n) {
 		int cur = n;
 		int[][] res = new int[helpArray.length][helpArray[0].length];
@@ -67,7 +64,8 @@ public class QuestionZeroOneStringCounter {
 		return res;
 
 	}
-
+	//矩阵的相乘
+	//矩阵相乘最重要的方法是一般矩阵乘积。它只有在第一个矩阵的列数（column，台湾作行数）和第二个矩阵的行数（row，台湾作列数）相同时才有定义。
 	public int[][] matrixMultiply(int[][] a, int[][] b) {
 		int[][] resultArray = new int[a.length][b[0].length];
 		for (int i = 0; i < a.length; i++) {
