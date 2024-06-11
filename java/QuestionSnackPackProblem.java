@@ -51,7 +51,41 @@ public class QuestionSnackPackProblem{
 		return used+dontUse ; 
 	}
 	
+<<<<<<< HEAD
 	
+=======
+	public int countWaysToPackSnacks2(int w,int[] v){
+		int[][] dp = new int[w+1][v.length+1];
+		for(int i=0; i< v.length+1;i++){
+			dp[0][i]= 1;	
+		}
+		for(int j = 0; j<w+1; j++ ){
+			dp[j][v.length] = 0;
+		}
+
+		for(int i=1; i<=w; i++){
+			for(int j=v.length-1; j >=0  ;j--){
+				Integer sumItem =0;
+				if(j == 0){
+					System.out.println(j);
+				}
+				if(i -v[j]==0){
+					sumItem += 1;
+				}else if( i - v[j] > 0 ){
+				  	sumItem += dp[i-v[j]][j+1];
+				}
+				sumItem += dp[i][j+1];
+				dp[i][j] = sumItem;
+			}	
+		
+		}
+		Integer result = 0;
+		for(int i=0;i< w+1;i++){
+			result+=dp[i][0];	
+		}
+		return result;
+	}	
+>>>>>>> a2b5697 (QuestionSnackPackProblem.java add dp)
 
 	public static void main(String[] args){
 		// 假设零食的数量
@@ -61,7 +95,11 @@ public class QuestionSnackPackProblem{
 		// 定义一个零食数组，这里使用硬编码的值
 		int[] snacks = {2, 3, 4, 5, 6};
 		QuestionSnackPackProblem snack = new QuestionSnackPackProblem();
+<<<<<<< HEAD
 		int result = snack.countWaysToPackSnacks(w,snacks);
+=======
+		int result = snack.countWaysToPackSnacks2(w,snacks);
+>>>>>>> a2b5697 (QuestionSnackPackProblem.java add dp)
 		System.out.println(result);
 	}
 }
