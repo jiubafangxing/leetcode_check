@@ -50,7 +50,7 @@ public class QuestionSnackPackProblem{
 		int dontUse =	process(n+1, w,v);
 		return used+dontUse ; 
 	}
-	
+	//动态规划方式解决	
 	public int countWaysToPackSnacks2(int w,int[] v){
 		int[][] dp = new int[w+1][v.length+1];
 		for(int i=0; i< v.length+1;i++){
@@ -59,14 +59,11 @@ public class QuestionSnackPackProblem{
 		for(int j = 0; j<w+1; j++ ){
 			dp[j][v.length] = 0;
 		}
-
 		for(int i=1; i<=w; i++){
 			for(int j=v.length-1; j >=0  ;j--){
 				Integer sumItem =0;
-				if(j == 0){
-					System.out.println(j);
-				}
 				if(i -v[j]==0){
+					//一旦刚好满足背包容量直接返回此方法适配
 					sumItem += 1;
 				}else if( i - v[j] > 0 ){
 				  	sumItem += dp[i-v[j]][j+1];
