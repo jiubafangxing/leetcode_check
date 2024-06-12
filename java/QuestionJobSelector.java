@@ -56,66 +56,62 @@
 
 import java.util.*;
 
-public class QuestionJobSelector{
+public class QuestionJobSelector {
 
-
-
-	public static class Job implements Comparable<Job>{
+	public static class Job implements Comparable<Job> {
 
 		public Integer difficulty;
 		public Integer reward;
-		public Job(Integer difficulty, Integer reward){
+
+		public Job(Integer difficulty, Integer reward) {
 			this.difficulty = difficulty;
 			this.reward = reward;
 		}
+
 		@Override
 		public int compareTo(QuestionJobSelector.Job o) {
-			return this.difficulty ==  o.difficulty? o.reward-this.reward: this.difficulty - o.difficulty;
+			return this.difficulty == o.difficulty ? o.reward - this.reward : this.difficulty - o.difficulty;
 		}
 	}
-
-
-
 
 	public static void main(String[] args) {
 		// 模拟实际输入数据，包含至少15个工作实例
 		Job[] jobs = {
-			new Job(5, 200),
-			new Job(3, 150),
-			new Job(7, 250),
-			new Job(2, 100),
-			new Job(6, 210),
-			new Job(1, 90),
-			new Job(4, 180),
-			new Job(8, 300),
-			new Job(1, 120), // 相同难度，更高报酬
-			new Job(9, 320),
-			new Job(5, 220), // 相同难度，更高报酬
-			new Job(10, 350),
-			new Job(3, 160), // 相同难度，更高报酬
-			new Job(11, 380),
-			new Job(7, 260)  // 相同难度，更高报酬
+				new Job(5, 200),
+				new Job(3, 150),
+				new Job(7, 250),
+				new Job(2, 100),
+				new Job(6, 210),
+				new Job(1, 90),
+				new Job(4, 180),
+				new Job(8, 300),
+				new Job(1, 120), // 相同难度，更高报酬
+				new Job(9, 320),
+				new Job(5, 220), // 相同难度，更高报酬
+				new Job(10, 350),
+				new Job(3, 160), // 相同难度，更高报酬
+				new Job(11, 380),
+				new Job(7, 260) // 相同难度，更高报酬
 		};
-		System.out.println("难度"+10+"reward"+findMaxReward(jobs,10));		
-		System.out.println("难度"+1+"reward"+findMaxReward(jobs,1));		
-		System.out.println("难度"+7+"reward"+findMaxReward(jobs,7));		
+		System.out.println("难度" + 10 + "reward" + findMaxReward(jobs, 10));
+		System.out.println("难度" + 1 + "reward" + findMaxReward(jobs, 1));
+		System.out.println("难度" + 7 + "reward" + findMaxReward(jobs, 7));
 	}
 
-    public static int findMaxReward(Job[] jobs, int ability){
-	Arrays.sort(jobs );
-     	TreeMap<Integer,Integer> treeMap= new TreeMap<>();
-	treeMap.put(jobs[0].difficulty, jobs[0].reward);
-	Job pre= jobs[0];
-	for(Job job:jobs){
-		if(job.difficulty != pre.difficulty && job.reward > pre.reward){
-			treeMap.put(job.difficulty,job.reward);
-			pre = job;
+	public static int findMaxReward(Job[] jobs, int ability) {
+		Arrays.sort(jobs);
+		TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+		treeMap.put(jobs[0].difficulty, jobs[0].reward);
+		Job pre = jobs[0];
+		for (Job job : jobs) {
+			if (job.difficulty != pre.difficulty && job.reward > pre.reward) {
+				treeMap.put(job.difficulty, job.reward);
+				pre = job;
+			}
 		}
+		Integer result = treeMap.floorKey(ability);
+
+		return result != null ? treeMap.get(result) : -1;
+
 	}
-	Integer result = treeMap.floorKey(ability);	
-	
-	return result != null ? treeMap.get(result):-1;
-
-
-    }
 }
