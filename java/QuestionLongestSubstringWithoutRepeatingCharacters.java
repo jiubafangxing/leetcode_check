@@ -22,43 +22,6 @@ public class QuestionLongestSubstringWithoutRepeatingCharacters{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public static void main(String[] args){
 		String teststr = "abcabcbb";	
 		int result = findLengthOfLongestSubstring(teststr);
