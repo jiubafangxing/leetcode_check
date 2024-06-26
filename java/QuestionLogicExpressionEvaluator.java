@@ -25,7 +25,7 @@
  * Return: 2
  */
 public class QuestionLogicExpressionEvaluator{
-	
+
 	public static int evaluate(String expression, Integer expected){
 		char[] array = expression.toCharArray();	
 		return p(array, 0, array.length-1, expected);
@@ -99,12 +99,75 @@ public class QuestionLogicExpressionEvaluator{
 					ways += leftWaysTrue * rightWaysTrue;
 					ways += leftWaysFalse * rightWaysFalse;
 				}
-			
+
 			}
 		}
 		return ways;
 	}
 
+	public static int evaluate2(String exp , Integer expected){
+		char[] arr = exp.toCharArray();
+		int[][] dpTrue = new int[arr.length][arr.length];
+		int[][] dpFalse = new int[arr.length][arr.length];
+		for(int i=0;i< arr.length;i= i+2){
+			dpTrue[i][i] = arr[i] == '1'? 1:0;			
+			dpFalse[i][i] = arr[i] == '0'? 1:0;			
+		}
+
+		for(int i = arr.length-3; i >=0 ; i = i-2){
+			for(int j = i+2; j< arr.length; j= j+2){
+				for(int z= i+1; z< j ; z+=2)	{
+					int right = z-1;
+					int left =z+1;
+					int ways = dpTrue[i][j];
+						if(arr[z] ==  '|'){
+							Integer leftWaysTrue	=dpTrue[i][right];	
+							Integer rightWaysTrue =dpTrue[left][j];	
+							Integer leftWaysFalse	=dpFalse[i][right];	
+							Integer rightWaysFalse = dpFalse[left][j];	
+							ways += leftWaysTrue * rightWaysTrue;
+							ways += leftWaysFalse * rightWaysTrue;
+							ways += leftWaysTrue * rightWaysFalse;
+						}else if (arr[z] == '&'){
+							Integer leftWaysTrue	=dpTrue[i][right];	
+							Integer rightWaysTrue =dpTrue[left][j];	
+							ways += leftWaysTrue * rightWaysTrue;
+						}else{
+							Integer leftWaysTrue	=dpTrue[i][right];	
+							Integer rightWaysTrue =dpTrue[left][j];	
+							Integer leftWaysFalse	=dpFalse[i][right];	
+							Integer rightWaysFalse = dpFalse[left][j];	
+							ways += leftWaysFalse * rightWaysTrue;
+							ways += leftWaysTrue * rightWaysFalse;
+						}
+						dpTrue[i][j] = ways;
+						int falseWays = dpFalse[i][j];
+						if(arr[z]==  '|'){
+							Integer leftWaysFalse	=dpFalse[i][right];	
+							Integer rightWaysFalse = dpFalse[left][j];	
+							falseWays += leftWaysFalse * rightWaysFalse;
+						}else if (arr[z] == '&'){
+							Integer leftWaysTrue	=dpTrue[i][right];	
+							Integer rightWaysTrue =dpTrue[left][j];	
+							Integer leftWaysFalse	=dpFalse[i][right];	
+							Integer rightWaysFalse = dpFalse[left][j];	
+							falseWays += leftWaysFalse * rightWaysTrue;
+							falseWays += leftWaysTrue * rightWaysFalse;
+							falseWays += leftWaysFalse * rightWaysFalse;
+						}else{
+							Integer leftWaysTrue	=dpTrue[i][right];	
+							Integer rightWaysTrue =dpTrue[left][j];	
+							Integer leftWaysFalse	=dpFalse[i][right];	
+							Integer rightWaysFalse = dpFalse[left][j];	
+							falseWays += leftWaysTrue * rightWaysTrue;
+							falseWays += leftWaysFalse * rightWaysFalse;
+						}
+						dpFalse[i][j] = falseWays;
+					}
+				}
+			}
+			return expected == 1? dpTrue[0][arr.length-1]: dpFalse[0][arr.length-1];
+	}
 	public static boolean valid(char[] arr, int start, int end){
 		for(int i=0;i< end+1;i++){
 			char c = arr[i];
@@ -124,7 +187,7 @@ public class QuestionLogicExpressionEvaluator{
 
 	public static void main(String[] args){
 		String expression = "1^0|0|1";
-		Integer result = evaluate(expression, 0);
+		Integer result = evaluate2(expression, 0);
 		System.out.println("result is "+ result);
 
 	}
