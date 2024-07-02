@@ -1,3 +1,6 @@
+/*
+ * 给定一个数组，求如果排序之后，相邻两数的最大差值，要求时间复杂度O(N)，且要求不能用非基于比较的排序。
+ */
 public class QuestionHighAdjacentMaxDifferenceFinder{
 	public static int getAdjacentMaxDiffenence(int[] arr){
 		Integer max= Integer.MIN_VALUE;
