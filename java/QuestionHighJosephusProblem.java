@@ -6,7 +6,7 @@ public class QuestionHighJosephusProblem{
 	}
 	public static  int findLivePerson(Node head, int m ){
 		if(head == null ){
-			return null;
+			return -1;
 		}
 		Node tmp = head;	
 		Integer length = 0;
@@ -21,7 +21,7 @@ public class QuestionHighJosephusProblem{
 			tmp = tmp.next;	
 			index++;
 		}
-		return tmp;
+		return index;
 	}
 
 	public static int findLive(int i , int m){
