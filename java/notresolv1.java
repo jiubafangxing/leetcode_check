@@ -12,7 +12,8 @@ CC 里面有一个土豪很喜欢一位女直播 kiki 唱歌，平时就经常�
 输出：6
  *
  */
-public class QuestionLiveStreamPopularity{
+//QuestionLiveStreamPopularity
+public class notresolv1{
 
 	
 
