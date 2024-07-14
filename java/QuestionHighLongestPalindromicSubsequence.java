@@ -1,3 +1,6 @@
+/**
+ * 计算最长回文子序列的长度
+ */
 public class QuestionHighLongestPalindromicSubsequence{
 
 	public static int lps(String s){
