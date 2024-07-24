@@ -15,47 +15,49 @@ public class QuestionHighPerfectShuffle{
 				return;
 		}
 		int length = end - start +1;
-		int times = times( length);
-		int step = length / times;
-		int firstPart =( (int)Math.pow(3,times))-1;
+		int times =  times( length);
+		int firstPart =( (int)Math.pow(3,times-1))-1;
 		int firstPartEndIdx = start + firstPart -1;
 		int firstPostPartStartIdx = start+ firstPart/2 ;
+		int mid = start + length/2 -1;
 		if(firstPart < length){
 			int secondPartStartIdx = firstPartEndIdx +1;
-			reverse(firstPostPartStartIdx, firstPartEndIdx, arr);
-			reverse(firstPartEndIdx+1, end, arr);
-			reverse(firstPostPartStartIdx, end, arr);
+			reverse(firstPostPartStartIdx, mid , arr);
+			reverse(mid+1, firstPartEndIdx+(length-firstPart)/2, arr);
+			reverse(firstPostPartStartIdx, firstPartEndIdx+(length-firstPart)/2, arr);
 			suffle(arr, secondPartStartIdx, end);		
 		}
-		for(int i = start;i<= start + times; i++){
-			int stepStart = 0;
+		for(int i = 0;i<  times-1; i++){
+				int p =((int) Math.pow(3,i))-1;
+				int holdValue = arr[p+start];
+				int moveSize = firstPart/(times-1);
 
-			int steps = 0;
-			int idx = stepStart+step*steps;
-			int valueHold = arr[idx];
-			while(idx <= firstPartEndIdx)	{
-				if(isFirstPartLeft(idx, start, firstPart)){
-					int dest = stepStart + 2*(steps+1) -1;
-					int tmp= arr[dest];
-					arr[dest] = valueHold;
-					valueHold =  tmp;
-				}else{
-					int dest = idx - firstPostPartStartIdx;
-					dest = (dest+1)*2;
-					int tmp= arr[dest];
-					arr[dest] = valueHold;
-					valueHold =  tmp;
+				while(moveSize > 0){
+					if(isFirstPartLeft(p,  firstPart)){
+						int dest = (p+1)*2 -1 +start;
+						System.out.println("当前位置"+p+"目标位置"+dest);
+						int tmp = arr[dest];
+						arr[dest] = holdValue;
+						holdValue = tmp;
+						p = dest -start;
+					}else{
+						int dest =( p+1-firstPart/2)*2 -2 +start;
+						System.out.println("当前位置"+p+"目标位置"+dest);
+						int tmp = arr[dest];
+						arr[dest] = holdValue;
+						holdValue = tmp;
+						p = dest -start;
+					}
+					moveSize--;
+				}
 
-				}	
-				steps++;
-				idx = stepStart+step*steps;			
-			}
+
 		}
 	}
 
-	public static boolean isFirstPartLeft(int idx, int start, int length){
-		int cmp = start + length/2 -1;	
-		return idx <= cmp;
+	public static boolean isFirstPartLeft(int idx,  int length){
+
+		return (idx+1) <= length/2;
 	}
 
 	public static void reverse(int start, int end, int[] arr){
@@ -74,10 +76,10 @@ public class QuestionHighPerfectShuffle{
 
 	public static int times(int arrLength){
 		int i = 1;
-		while(((int)Math.pow(3,i) -1) < arrLength){
+		while(((int)Math.pow(3,i) -1) <= arrLength){
 			i++;
 		}
-		return i-1;
+		return i;
 	}
 
 	public static void main(String[] args){
