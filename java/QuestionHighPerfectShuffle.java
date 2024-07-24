@@ -10,49 +10,59 @@ import java.util.*;
  */
 public class QuestionHighPerfectShuffle{
 
-	public static void suffle(int[] arr, int start, int end){
-		if(start >= end){
-				return;
-		}
-		int length = end - start +1;
-		int times =  times( length);
-		int firstPart =( (int)Math.pow(3,times-1))-1;
-		int firstPartEndIdx = start + firstPart -1;
-		int firstPostPartStartIdx = start+ firstPart/2 ;
-		int mid = start + length/2 -1;
-		if(firstPart < length){
-			int secondPartStartIdx = firstPartEndIdx +1;
-			reverse(firstPostPartStartIdx, mid , arr);
-			reverse(mid+1, firstPartEndIdx+(length-firstPart)/2, arr);
-			reverse(firstPostPartStartIdx, firstPartEndIdx+(length-firstPart)/2, arr);
-			suffle(arr, secondPartStartIdx, end);		
-		}
-		for(int i = 0;i<  times-1; i++){
-				int p =((int) Math.pow(3,i))-1;
-				int holdValue = arr[p+start];
-				int moveSize = firstPart/(times-1);
 
-				while(moveSize > 0){
-					if(isFirstPartLeft(p,  firstPart)){
-						int dest = (p+1)*2 -1 +start;
-						System.out.println("当前位置"+p+"目标位置"+dest);
-						int tmp = arr[dest];
-						arr[dest] = holdValue;
-						holdValue = tmp;
-						p = dest -start;
-					}else{
-						int dest =( p+1-firstPart/2)*2 -2 +start;
-						System.out.println("当前位置"+p+"目标位置"+dest);
-						int tmp = arr[dest];
-						arr[dest] = holdValue;
-						holdValue = tmp;
-						p = dest -start;
-					}
-					moveSize--;
+	public static void suffle(char[] arr){
+			if(null != arr && arr.length > 0 && (arr.length &1) == 0){
+					suffle(arr, 0 , arr.length-1);
+
+			}
+
+	}
+
+	public static void suffle(char[] arr, int L, int R){
+		while(R -L +1 >0){
+				int len = R-L+1;
+				int base = 3;
+				int k = 1;
+				while(base <= (len+1)/3){
+					base *=3;
+					k++;
+				} 
+		
+
+				int half = (base-1)/2;
+				int mid = (L+R)/2;
+				rotate(arr, L+half,mid,mid+half);
+				cycles(arr, L, base-1,k);
+				L = L+base-1;
+
+		}
+
+
+	
+	}
+	private static void cycles(char[] arr, int start, int len, int k) {
+		for(int i=0, trigger= 1;i<k;i++,trigger *=3){
+				char preValue = arr[trigger +start-1];
+				int cur = modifyIndex(trigger, len);
+				while(cur != trigger){
+					char tmp = arr[cur+start-1];
+					arr[cur+start-1]= preValue;
+					preValue =tmp;
+					cur= modifyIndex(cur, len);
 				}
-
-
+				arr[cur+start-1] = preValue;
 		}
+	}
+
+	private static void rotate(char[] arr, int L, int M, int R) {
+			reverse(arr, L, M);
+			reverse(arr, M+1, R);
+			reverse(arr, L, R);
+	}
+
+	public static int modifyIndex(int i, int len){
+		return (2*i)%(len+1);
 	}
 
 	public static boolean isFirstPartLeft(int idx,  int length){
@@ -60,15 +70,15 @@ public class QuestionHighPerfectShuffle{
 		return (idx+1) <= length/2;
 	}
 
-	public static void reverse(int start, int end, int[] arr){
+	public static void reverse( char[] arr, int start, int end){
 		while(start < end){
 			swap(arr, start++, end--);
 		}
 
 	}
 
-	public static void swap(int[] arr, int idx1, int idx2){
-		int tmp = arr[idx1];
+	public static void swap(char[] arr, int idx1, int idx2){
+		char tmp = arr[idx1];
 		arr[idx1] = arr[idx2];
 		arr[idx2] = tmp;
 
@@ -83,10 +93,10 @@ public class QuestionHighPerfectShuffle{
 	}
 
 	public static void main(String[] args){
-		int[] arr = {1,3,5,7,9,2,4,6,8,10};
+		char[] arr = {'a','b','c','d','e','f'};
 		suffle(arr, 0 , arr.length-1);
 		for(int i=0; i< arr.length;i++){
-			System.out.printf("%d,",arr[i]);
+			System.out.printf("%c,",arr[i]);
 		}
 		System.out.println("");
 	}
