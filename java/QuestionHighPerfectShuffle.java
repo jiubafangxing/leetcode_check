@@ -65,10 +65,7 @@ public class QuestionHighPerfectShuffle{
 		return (2*i)%(len+1);
 	}
 
-	public static boolean isFirstPartLeft(int idx,  int length){
 
-		return (idx+1) <= length/2;
-	}
 
 	public static void reverse( char[] arr, int start, int end){
 		while(start < end){
@@ -84,13 +81,6 @@ public class QuestionHighPerfectShuffle{
 
 	} 
 
-	public static int times(int arrLength){
-		int i = 1;
-		while(((int)Math.pow(3,i) -1) <= arrLength){
-			i++;
-		}
-		return i;
-	}
 
 	public static void main(String[] args){
 		char[] arr = {'a','b','c','d','e','f'};
