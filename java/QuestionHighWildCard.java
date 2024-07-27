@@ -33,12 +33,59 @@ public class QuestionHighWildCard{
 		return match(marr, earr, mi, ei+2);
 		
 	}
+	
+	
+	public static boolean match2(String matchStr, String exp){
 
+		char[] marr= matchStr.toCharArray();	
+		char[] earr = exp.toCharArray();
+		boolean[][] dp = initdp(marr,earr);
+		for(int mi=marr.length-1;mi>=0;mi--){
+			for(int ei=earr.length-2;ei>=0;ei--){
+				if('*' != earr[ei+1] ){
+					dp[mi][ei] =  (earr[ei]=='.' || earr[ei] ==marr[mi]) && dp[ mi+1][ei+1];
+				}else{
+					int nmi = mi;
+					while(marr.length != nmi && (marr[nmi] == earr[ei]|| earr[ei] == '.')){
+						if(dp[ nmi][ei+2]){
+							dp[mi][ei] =true;			
+							break;
+						}
+						nmi++;	
+					}
+					if(dp[mi][ei] != true){
+						dp[mi][ei] = dp[nmi][ ei+2];
+					}
+				}
+			}
+		}
+		return dp[0][0];
+	}
+
+	public static boolean[][] initdp(char[] mArr, char[] eArr){
+		boolean[][] dp = new boolean[mArr.length+1][eArr.length+1];
+		dp[mArr.length][eArr.length] = true;
+		if(mArr.length > 0 && eArr.length >0 ){
+			if((eArr[eArr.length-1] == '.' ) || mArr[mArr.length-1] == eArr[eArr.length-1])	{
+				dp[mArr.length-1][eArr.length-1]= true;
+			}
+		}
+		for(int i =eArr.length-2; i>=0;i-=2){
+			if(eArr[i] != '*' && eArr[i+1] == '*'){
+				dp[mArr.length][i] = true;	
+				break;
+			}	
+		}
+		return dp;
+	
+	}
 	public static void main(String[] args){
 		String match = "aaaazdasdf";
 		String exp  = "a..azdasdf";
 	 	boolean matchResult = match(match, exp);
+	 	boolean matchResult2 = match2(match, exp);
 		System.out.println("match result is "+ matchResult);
+		System.out.println("match result 2 is "+ matchResult);
 
 	}
  
