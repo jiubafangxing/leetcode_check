@@ -1,13 +1,11 @@
 /*
+ * The task is to determine if a string composed of characters from the set [a-z] matches a pattern string that includes the wildcard characters '?' and '*'. The wildcard '?' matches any single character, and the '*' matches zero or more of any characters. The length of the strings will not exceed 100, and the strings are not empty.
  *
- *The task is to determine if a string composed of characters from the set [a-z] matches a pattern string that includes the wildcard characters '?' and ''. The wildcard '?' matches any single character, and the '' matches zero or more of any characters. The length of the strings will not exceed 100, and the strings are not empty.
-
-Input Description:
-
-The input consists of two strings: str and pattern. The length of each string is between 1 and 100 characters.
-Output Description:
-
-Return true to indicate a match, or false to indicate no match.
+ * Input Description:
+ * The input consists of two strings: str and pattern. The length of each string is between 1 and 100 characters.
+ *
+ * Output Description:
+ * Return true to indicate a match, or false to indicate no match.
  */
 public class QuestionHighWildCard{
 	
