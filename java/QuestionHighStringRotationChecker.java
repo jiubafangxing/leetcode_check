@@ -22,7 +22,7 @@ public class QuestionHighStringRotationChecker {
 		char[] s1Array = str1.toCharArray();
 		char[] s2Array = str2.toCharArray();
 		int N = s1Array.length;
-		int[][][] dp = new int[N+1][N][N];
+		boolean[][][] dp = new boolean[N+1][N][N];
 		for(int i=0;i< N;i++){
 			for(int j=0;j< N;j++){
 				dp[1][i][j] = (s1Array[i]  == s2Array[j]);
@@ -30,25 +30,26 @@ public class QuestionHighStringRotationChecker {
 		}
 		//still need to adjust
 		for(int i=2;i< dp.length;i++){
-			for(int start1=0;start1< i-1;start1++){
-				for(int start2=0;start2< i-1;start2++){
-					if((isRotation(s1Array,s2Array, start1, start2,i)&& isRotation(s1Array,s2Array, start1+ i,start2+i, size-i)) 
-							||( isRotation(s1Array, s2Array, start1,start2+size-i,i ) && isRotation(s1Array, s2Array,start1+i,start2,size-i ))){
-						result = true;
-						break;
-					}
+			for(int start1=1;start1<= N-i;start1++){
+				for(int start2=1;start2<= N-i;start2++){
+					for(int leftPart=1;leftPart< i; leftPart++){
 					if(
-						(dp[][start1][start2] && dp[i-1][start1+i][start2+i])
+						(dp[leftPart][start1][start2] && dp[i-leftPart][start1+i][start2+i])
 						||
 						
-						(dp[i-1][start1][start2] && dp[i-1][start1+i][start2+i])
+						(dp[leftPart][start1][start2+N-i] && dp[i-leftPart][start1+i][start2])
 
-					)
+					){
+						dp[i][start1][start2] = true;
+						break;
+					}
+					}
 
 				}
 			}
 
 		}
+		return dp[N][0][0];
 	}
 
 	public static boolean check(char[] str1, char[] str2){
@@ -85,6 +86,7 @@ public class QuestionHighStringRotationChecker {
 		String str1 = "abcd";
 		String str2 = "cdab";
 		System.out.println(isRotation(str1,str2));
+		System.out.println(isRotation2(str1,str2));
 
 	}
 }
