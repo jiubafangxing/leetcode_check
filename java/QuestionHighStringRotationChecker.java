@@ -8,7 +8,6 @@ public class QuestionHighStringRotationChecker {
 		if(str1 == null || str2 == null || str1.length() != str2.length()){
 			return false;
 		}
-		boolean result = false;
 		char[] s1Array = str1.toCharArray();
 		char[] s2Array = str2.toCharArray();
 	 	return isRotation(s1Array,s2Array,0,0, s1Array.length);
@@ -20,10 +19,11 @@ public class QuestionHighStringRotationChecker {
 			return s1Array[start1] == s2Array[start2];
 		}
 		boolean result = false;
-		for(int i=1; i<= size-2;i++){
-			if((isRotation(s1Array,s2Array, start1, start1,i)&& isRotation(s1Array,s2Array, start1+ i,start1+i, size-i)) 
-			       	||( isRotation(s1Array, s2Array, start1,start2+i-1,i ) && isRotation(s1Array, s2Array,start1+size-i,start2,size-i ))){
-					result = true;
+		for(int i=1; i< size;i++){
+			if((isRotation(s1Array,s2Array, start1, start2,i)&& isRotation(s1Array,s2Array, start1+ i,start2+i, size-i)) 
+			       	||( isRotation(s1Array, s2Array, start1,start2+size-i,i ) && isRotation(s1Array, s2Array,start1+i,start2,size-i ))){
+					
+								result = true;
 					break;
 				}
 		}
@@ -32,8 +32,8 @@ public class QuestionHighStringRotationChecker {
 
 
 	public static void main(String[] args){
-		String str1 = "dbac";	
-		String str2 = "abcd";	
+		String str1 = "abcd";
+		String str2 = "cdab";
 		System.out.println(isRotation(str1,str2));
 	
 	}
