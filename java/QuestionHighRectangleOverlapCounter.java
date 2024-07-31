@@ -49,11 +49,24 @@ public class QuestionHighRectangleOverlapCounter {
 	public static int count(Rectangle[] rectangles){
 		int result = -1;
 		Arrays.sort(rectangles, new DownComparator());
-
+		TreeSet<Rectangle> leftRectanles = new TreeSet<Rectangle>();
 		for(Rectangle rectangle:rectangles){
-		
+			clearLessThanBottom(leftRectangles, rectangle.down);	
 		}
 		return result ;	
+	}
+
+
+	public static void clearLessThanBottom(TreeSet<Rectangle> t, int d ){
+		List<Rectangle> removes = new ArrayList();
+		for(Rectangle r:t){
+			if(r.top >= d){
+				break;
+			}else{
+					
+			}	
+		}	
+	
 	}
 	public static void main(String[] args){
 	
