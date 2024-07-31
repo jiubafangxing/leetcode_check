@@ -19,54 +19,107 @@
  */
 public class QuestionHighGasStation{
 	
-	public static int[] res(int[] oil, int[] distance){
-		if(oil.length == 1){
-			 int[] result = {false};
-			 result[0] = (oil[0]-distance[0] >=0	);
+	public static boolean[] res(int[] oil, int[] distance){
+		boolean[] result = null;
+		if(null == oil || null == distance || oil.length != distance.length){
+			result = new boolean[1];
+			return result;
+		}	
+		int[] leftOil= new int[oil.length];
+		for(int i =0;i< oil.length;i++){
+			leftOil[i]= oil[i]-distance[i];	
 		}
-		int[] leftOil = new int[oil.length];
-		for(int i=0;i< oil.length;i++){
-			leftOil[i] = oil[i]- distance[i];
+		int init = findBiggerThanZero(leftOil);
+		if(init == -1) {
+			result = new boolean[leftOil.length];
+			return result;
+		}else{
+		
+			result = expore(leftOil, init);
+			return result;
 		}
-		int len = leftOil.length;
-		int start =0;
-		int end = 1;
+
+	}
+
+
+	public static boolean[] expore(int[] leftOil, int init){
+		boolean[] res = new boolean[leftOil.length];
+		int start = init;	
 		int rest = 0;
 		int need = 0;
-		if(leftOil[0]>0){
-			rest = leftOil[0];
-		}else{
-			need = need -leftOil[0];
-		}
-		while(nextStartPos(start,len) == end ){
-			
-		}
-	
+		int len = leftOil.length;
+		int end = nextIndex(init,len);
+		do{	
+			if(start != init &&  start == lastIndex(end, len)){
+ 					break;
+			}
+			if(leftOil[start] < need){
+				need -= leftOil[start];	
+			}else{
+				rest = leftOil[start] - need;
+				need = 0;
+				while(rest>0 && start != end){
+					rest += leftOil[end];
+					end = nextIndex(end, len);
+				}
+				if(rest >= 0 ){
+					res[start] = true;
+					connectGood(leftOil,lastIndex(start, len), init,res);
+					break;
+				}
+			}
+			start = lastIndex(start,len);	
+		}while(start != init);
+		return res;
 	}
 
-	public static int nextStartPos(int cur, int len){
-		int start = cur-1;
-		if(start <0){
-		   start = len + start	;
-		}
-		return start;	
+
+	public static int lastIndex(int index, int len){
+		return index == 0 ? (len - 1) : index - 1;
 	}
 
 
-	public static int nextEndPost(int cur, int len){
-		int end = cur+1;
-		if(end >= len){
-			return len - end;
-		}
-		return end;
-
+	public static int nextIndex(int index, int len){
+		return index == len - 1 ? 0 : (index + 1);
 	}
 
-	
+
+	public static void connectGood(int[] leftOil, int last, int init, boolean[] res ){
+		int need = 0;
+		while(last != init){
+			if(leftOil[last]>= need){
+				need = 0;	
+				res[last] = true;
+			}else{
+				need -= leftOil[last];
+			}
+			last = lastIndex(last, leftOil.length);
+		}
+	}
+
+
+	public static int findBiggerThanZero(int[] l){
+		int res = -1;
+		for(int i=0;i<l.length;i++){
+			if(l[i]>= 0){	
+				res = i;
+			}
+		}
+		return res;
+	}
 
 	public static void main(String[] args){
 		int[] oil = {3,2,1,4,2};
 		int[] distance = {4,1,3,2,1}; 	
-	
+		boolean[] results = res(oil, distance);	
+		for(int i =0;i< results.length;i++){
+			System.out.println("index"+i+", value:"+results[i]);
+		}
+		int[] oil2 = {30, 5, 10};
+		int[] distance2 = {10, 10, 10};
+		results = res(oil2, distance2);	
+		for(int i =0;i< results.length;i++){
+			System.out.println("index"+i+", value:"+results[i]);
+		}
 	}
 }
