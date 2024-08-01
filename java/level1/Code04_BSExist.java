@@ -1,14 +1,17 @@
 public class Code04_BSExist{
 
 	public static  boolean exist(int[] arr, int destNum){
+		if(null == arr || arr.length == 0){
+			return false;
+		}
 		int L = 0;
 		int R = arr.length-1;
 		while(L<R){
-			int mid = (L+R)>>1;
+			int mid = L+ ((R-L)>>1);
 			if(arr[mid]> destNum){
-				R = mid;
+				R = mid-1;
 			}else if(arr[mid]< destNum){
-				L = mid;
+				L = mid+1;
 			}else{
 				return true;
 			}
