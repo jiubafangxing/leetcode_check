@@ -6,7 +6,7 @@ public class Code04_BSExist{
 		}
 		int L = 0;
 		int R = arr.length-1;
-		while(L<R){
+		while(L<=R){
 			int mid = L+ ((R-L)>>1);
 			if(arr[mid]> destNum){
 				R = mid-1;
