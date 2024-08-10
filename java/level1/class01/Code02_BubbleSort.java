@@ -1,5 +1,5 @@
 import java.util.*;
-public class Code01_BubbleSort{
+public class Code02_BubbleSort{
 	public static void bubbleSort(int[] arr){
 		if(null == arr || arr.length == 1){
 			return;
