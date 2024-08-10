@@ -17,6 +17,7 @@ import java.util.*;
  *   operations are valid.
  * - Depending on your language, the stack may not be supported natively.
  *   - You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.
+ * https://leetcode.cn/problems/implement-queue-using-stacks/solutions/
  */
 public class Code002 {
 	public static class MyQueue {
